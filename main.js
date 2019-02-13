@@ -12,7 +12,43 @@ const main = () => {
             <button>Start</button>
          </section>
       `)
+      const startButton = document.querySelector('button');
+      startButton.addEventListener('click', buidGameScreen);
    };
+
+   const buidGameScreen = () => {
+      const gameScreen = buildDom(`
+         <section class="game-screen">
+            <canvas></canvas>
+         </section>
+      `)
+
+      const width = document.querySelector('.game-screen').offsetWidth;
+      const height = document.querySelector('.game-screen').offsetHeight;
+   
+      const canvasElement = document.querySelector('canvas');
+   
+      canvasElement.setAttribute('width', width);
+      canvasElement.setAttribute('height', height);
+
+      setTimeout(buidGameOver, 3000);
+
+      const game = new Game(canvasElement);
+      game.startLoop();
+   }
+
+   const buidGameOver = () => {
+      const gameOverScreen = buildDom(`
+         <section class="game-over">
+            <h1>Game Over Screen</h1>
+            <button>Restart</button>
+         </sectio>
+      `)
+
+      const restartButton = document.querySelector('button');
+      restartButton.addEventListener('click', buidGameScreen);
+   }
+
 
    buildSplashScreen();
 };
