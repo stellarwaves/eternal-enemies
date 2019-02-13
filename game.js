@@ -1,6 +1,5 @@
 'use strict';
 
-
 class Game{
    constructor(canvas){
       this.canvas = canvas;
@@ -11,8 +10,15 @@ class Game{
 
    startLoop(){
       //console.log('out of loop');
+      this.player = new Player(this.canvas, 3);
+
       const loop = () => {
-         //console.log('in');
+         if(Math.random() > 0.97) {
+            const y = Math.random() * this.canvas.height;
+            this.enemies.push(new Enemy(this.canvas, y))
+         }
+
+         this.checkAllCollitions();
          //update
          this.updateCanvas();
          //clear
@@ -26,14 +32,23 @@ class Game{
    };
 
    updateCanvas(){
-
+      this.player.update();
+      this.enemies.forEach((enemy) => {
+         enemy.update();
+      });
    }
-
    clearCanvas(){
       this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
    };
 
    drawCanvas(){
+      this.player.draw();
+      this.enemies.forEach((enemy) => {
+         enemy.draw();
+      });
+   }
 
+   checkAllCollitions() {
+      this.player.checkScreenLimit();
    }
 };
